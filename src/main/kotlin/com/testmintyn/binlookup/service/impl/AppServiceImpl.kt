@@ -66,7 +66,7 @@ class AppServiceImpl : AppService {
     @Cacheable(value = [Utility.BIN_RESPONSE_CACHE_NAME], key = "#bin", unless = "#result == null || !#result.success")
     override fun lookupBIN(bin: String): ApiResponse? {
         try {
-            var header = mutableMapOf(
+            val header = mutableMapOf(
                 Pair("Accept-Version", "3")
             )
             val url = "$baseUrl$bin"
