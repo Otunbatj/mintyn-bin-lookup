@@ -1,6 +1,7 @@
 package com.testmintyn.binlookup.service.impl
 
 import com.testmintyn.binlookup.dto.UserDto
+import com.testmintyn.binlookup.exception.GeneralException
 import com.testmintyn.binlookup.exception.NotFoundException
 import com.testmintyn.binlookup.exception.UserCreationException
 import com.testmintyn.binlookup.extensions.Extensions.toUserDetails
@@ -43,6 +44,9 @@ class UserServiceImpl(private val userRepository: UserRepository, private val pa
 
     override fun loadUserByUsername(username: String?): UserDetails {
         val email = username ?: ""
+        if (email.isEmpty()) {
+            throw GeneralException("Invalid username or email")
+        }
         return getUserByEmail(email).toUserDetails()
     }
 }

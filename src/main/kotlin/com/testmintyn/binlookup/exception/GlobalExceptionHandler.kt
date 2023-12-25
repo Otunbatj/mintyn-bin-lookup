@@ -54,6 +54,19 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.valueOf(400)).body(response)
     }
 
+    @ExceptionHandler(value = [GeneralException::class])
+    fun handleGeneralException(
+        exception: GeneralException,
+        request: WebRequest
+    ): ResponseEntity<Any> {
+        val response = Response(
+            ResponseCodeAndMessage.FAILED_RESPONSE_CODE.code,
+            "An exception has occurred",
+            exception.message ?: ""
+        )
+        return ResponseEntity.status(HttpStatus.valueOf(400)).body(response)
+    }
+
     @ExceptionHandler(value = [UserCreationException::class])
     fun handleUserCreationException(exception: UserCreationException, request: WebRequest): ResponseEntity<Any> {
         val response = Response(
