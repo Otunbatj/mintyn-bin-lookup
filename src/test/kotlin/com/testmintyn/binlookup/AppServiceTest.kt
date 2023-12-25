@@ -172,7 +172,7 @@ class AppServiceTest {
     @Test
     fun testFailedUserCreation() {
         val userDto = UserDto("Test", "Test", "test@gmail.com", "08023234546", "Password@123")
-        //doReturn(null).`when`(userService).createUser(userDto.toUserEntity())
+        doReturn(null).`when`(userService).createUser(userDto.toUserEntity())
         doReturn(userDto.toUserEntity()).`when`(userRepository).save(userDto.toUserEntity())
         assertThrows<NullPointerException>("User creation failed") {
             appService.createUser(userDto)
