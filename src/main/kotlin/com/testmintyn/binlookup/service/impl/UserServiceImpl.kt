@@ -43,10 +43,9 @@ class UserServiceImpl(private val userRepository: UserRepository, private val pa
     }
 
     override fun loadUserByUsername(username: String?): UserDetails {
-        val email = username ?: ""
-        if (email.isEmpty()) {
+        if (username.isNullOrEmpty()) {
             throw GeneralException("Invalid username or email")
         }
-        return getUserByEmail(email).toUserDetails()
+        return getUserByEmail(username).toUserDetails()
     }
 }
