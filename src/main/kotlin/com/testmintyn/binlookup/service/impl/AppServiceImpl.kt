@@ -14,6 +14,7 @@ import com.testmintyn.binlookup.service.AppService
 import com.testmintyn.binlookup.service.HttpService
 import com.testmintyn.binlookup.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.util.*
@@ -31,10 +32,14 @@ class AppServiceImpl : AppService {
 
     @Autowired
     lateinit var gson: Gson
-    override fun createUser(userDto: UserDto): Response<Any> {
-        val user = userService.createUser(userDto.toUserEntity())
 
-        if (Objects.nonNull(user)) {
+    @Value("\${bin.base-url}")
+    lateinit var baseUrl: String
+
+    override fun createUser(userDto: UserDto): Response<Any> {
+        val user = userService.createUser(userDto)
+
+        if (Objects.nonNull(user.userId)) {
             return Response(
                 ResponseCodeAndMessage.SUCCESS_RESPONSE_CODE.code,
                 ResponseCodeAndMessage.SUCCESS_RESPONSE_CODE.message,
@@ -64,7 +69,7 @@ class AppServiceImpl : AppService {
             var header = mutableMapOf(
                 Pair("Accept-Version", "3")
             )
-            val url = "${Utility.BIN_BASE_URL}$bin"
+            val url = "$baseUrl$bin"
             val responseData = httpService.get(header, mutableMapOf(), url)
             if (responseData.isSuccess) {
                 val binResponseString = responseData.body.toString()

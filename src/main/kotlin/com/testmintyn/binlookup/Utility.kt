@@ -6,6 +6,6 @@ import java.util.function.Consumer
 
 
 object Utility {
-    const val BIN_BASE_URL = "https://lookup.binlist.net/"
+    //const val BIN_BASE_URL = "https://lookup.binlist.net/"
     const val BIN_RESPONSE_CACHE_NAME = "bin-responses"
 }
