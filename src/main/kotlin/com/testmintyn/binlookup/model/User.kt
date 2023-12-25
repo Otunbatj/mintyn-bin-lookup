@@ -21,10 +21,12 @@ data class User(
 
     @field:NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
+    @Column(unique = true)
     var email: String? = null,
 
     @field:NotBlank(message = "PhoneNumber is required")
     @field:Size(min = 11, max = 11, message = "Phone number must be 11 characters")
+    @Column(unique = true)
     var phoneNumber: String? = null,
 
     @field:NotBlank(message = "Password is required")

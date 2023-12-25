@@ -15,13 +15,7 @@ import org.springframework.stereotype.Service
 import java.util.Objects
 
 @Service
-class UserServiceImpl : UserService, UserDetailsService {
-    @Autowired
-    lateinit var userRepository: UserRepository
-
-    @Autowired
-    lateinit var passwordEncoder: BCryptPasswordEncoder
-
+class UserServiceImpl(private val userRepository: UserRepository, private val passwordEncoder: BCryptPasswordEncoder) : UserService, UserDetailsService {
     override fun createUser(userDto: UserDto): User {
         //hash the user password, don't persist clear password in the storage
         userDto.password = passwordEncoder.encode(userDto.password)
